@@ -44,13 +44,12 @@ fn to_frequency_map<T>(filtered_titles: &[T]) -> HashMap<T, u32> where
     T: std::hash::Hash,
     T: std::cmp::Eq,
     T: Clone {
-  let mut dict: HashMap<T, u32> = HashMap::new();
   filtered_titles
     .iter()
-    .for_each(|title| {
-      *dict.entry(title.clone()).or_insert(0) += 1;
-    });
-  dict
+    .fold(HashMap::new(), |mut map, key| {
+      *map.entry(key.clone()).or_insert(0) += 1;
+      map
+    })
 }
 
 fn cut_off(input: &str, endings: &[&str]) -> String {
