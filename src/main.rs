@@ -12,7 +12,7 @@ fn main() {
   };
 
   match File::open(&csv_file_name) {
-    Ok(csv_file) => parse_netflix_titles(csv_file),
+    Ok(csv_file) => parse_netflix_titles(&csv_file),
     Err(_) => println!("Could not find file with name {}", &csv_file_name)
   };
 }
@@ -22,7 +22,7 @@ struct Record {
   title: String,
 }
 
-fn parse_netflix_titles(csv_file: File) {
+fn parse_netflix_titles(csv_file: &File) {
   let reader = BufReader::new(csv_file);
   let mut csv_reader = csv::Reader::from_reader(reader);
   let endings = ["Limited", "Season", ": Book", "Part", ": "];  
